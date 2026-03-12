@@ -1,1 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-br">
 
+<head>
+
+<meta charset="UTF-8">
+<title>Consulta de Inscrição</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial, Helvetica, sans-serif;
+background:#f1f3f6;
+}
+
+.topo{
+background:#1e3a8a;
+color:white;
+padding:20px;
+text-align:center;
+}
+
+.topo img{
+height:60px;
+margin-bottom:10px;
+}
+
+.container{
+width:500px;
+margin:80px auto;
+background:white;
+padding:40px;
+border-radius:6px;
+box-shadow:0 2px 10px rgba(0,0,0,0.15);
+}
+
+h2{
+margin-top:0;
+color:#1e3a8a;
+}
+
+label{
+font-weight:bold;
+}
+
+input{
+width:100%;
+padding:12px;
+margin-top:8px;
+margin-bottom:20px;
+font-size:16px;
+border:1px solid #ccc;
+border-radius:4px;
+}
+
+button{
+width:100%;
+padding:12px;
+background:#1e3a8a;
+color:white;
+font-size:16px;
+border:none;
+border-radius:4px;
+cursor:pointer;
+}
+
+button:hover{
+background:#162d6e;
+}
+
+.resultado{
+margin-top:20px;
+font-size:16px;
+}
+
+.footer{
+text-align:center;
+margin-top:60px;
+color:#666;
+font-size:14px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="topo">
+
+<!-- Depois você coloca sua logo aqui -->
+<img src="logo.png">
+
+<h1>Sistema de Consulta</h1>
+
+</div>
+
+<div class="container">
+
+<h2>Confirmação de Vaga</h2>
+
+<p>Digite seu nome completo para consultar o registro.</p>
+
+<label>Nome Completo</label>
+
+<input type="text" id="nome" placeholder="Digite seu nome completo">
+
+<button onclick="consultar()">Consultar</button>
+
+<div class="resultado" id="resultado"></div>
+
+</div>
+
+<div class="footer">
+Sistema de consulta pública
+</div>
+
+<script>
+
+function consultar(){
+
+let nome = document.getElementById("nome").value.toLowerCase()
+
+if(nome == "maicon aurélio do prado" || nome == "maicon aurelio do prado"){
+
+window.location.href="perfil.html"
+
+}
+
+else{
+
+let nomes = [
+"João Pereira da Silva",
+"Carlos Eduardo Santos",
+"Maria Fernanda Oliveira",
+"Pedro Henrique Costa",
+"Ana Beatriz Souza"
+]
+
+let aleatorio = nomes[Math.floor(Math.random()*nomes.length)]
+
+document.getElementById("resultado").innerHTML =
+"Registro localizado para: <b>"+aleatorio+"</b>"
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
