@@ -55,10 +55,6 @@ font-size:16px;
 cursor:pointer;
 }
 
-button:hover{
-background:#082b66;
-}
-
 .perfil{
 display:flex;
 align-items:center;
@@ -142,13 +138,18 @@ margin-top:10px;
 
 <script>
 
+function normalizar(texto){
+return texto
+.toLowerCase()
+.normalize("NFD")
+.replace(/[\u0300-\u036f]/g,"")
+.trim();
+}
+
 function consultar(){
 
-var nomeDigitado = document.getElementById("nome").value
-.trim()
-.toLowerCase();
-
-var nomeCorreto = "maicon aurélio do prado";
+var nomeDigitado = normalizar(document.getElementById("nome").value);
+var nomeCorreto = normalizar("Maicon Aurélio do Prado");
 
 if(nomeDigitado === nomeCorreto){
 
@@ -255,9 +256,7 @@ Status: APROVADO
 
 `;
 
-}
-
-else{
+}else{
 
 document.getElementById("resultado").innerHTML =
 "<p style='color:red;margin-top:20px;'>Candidato não encontrado.</p>";
