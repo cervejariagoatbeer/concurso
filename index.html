@@ -4,81 +4,112 @@
 <head>
 
 <meta charset="UTF-8">
-<title>Consulta de Inscrição</title>
+<title>Consulta de Resultado</title>
 
 <style>
 
 body{
+font-family: Arial, Helvetica, sans-serif;
+background:#f1f3f8;
 margin:0;
-font-family:Arial, Helvetica, sans-serif;
-background:#f1f3f6;
-}
-
-.topo{
-background:#1e3a8a;
-color:white;
-padding:20px;
 text-align:center;
 }
 
-.topo img{
-height:60px;
+.topo{
+background:#0b3d91;
+padding:20px;
+color:white;
+}
+
+.logo{
+height:70px;
 margin-bottom:10px;
 }
 
 .container{
-width:500px;
-margin:80px auto;
+max-width:900px;
+margin:40px auto;
 background:white;
 padding:40px;
-border-radius:6px;
-box-shadow:0 2px 10px rgba(0,0,0,0.15);
-}
-
-h2{
-margin-top:0;
-color:#1e3a8a;
-}
-
-label{
-font-weight:bold;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,0.2);
 }
 
 input{
-width:100%;
+width:70%;
 padding:12px;
-margin-top:8px;
-margin-bottom:20px;
 font-size:16px;
+margin-top:20px;
+border-radius:5px;
 border:1px solid #ccc;
-border-radius:4px;
 }
 
 button{
-width:100%;
-padding:12px;
-background:#1e3a8a;
+padding:12px 25px;
+margin-top:15px;
+background:#0b3d91;
 color:white;
-font-size:16px;
 border:none;
-border-radius:4px;
+border-radius:5px;
+font-size:16px;
 cursor:pointer;
 }
 
 button:hover{
-background:#162d6e;
+background:#082b66;
 }
 
-.resultado{
-margin-top:20px;
-font-size:16px;
+.perfil{
+display:flex;
+align-items:center;
+gap:20px;
+margin-top:30px;
+text-align:left;
 }
 
-.footer{
+.foto{
+width:120px;
+border-radius:8px;
+}
+
+.titulo{
+color:#0b3d91;
+margin-top:30px;
+border-bottom:2px solid #ddd;
+padding-bottom:5px;
+text-align:left;
+}
+
+.tabela{
+width:100%;
+border-collapse:collapse;
+margin-top:10px;
+}
+
+.tabela th{
+background:#0b3d91;
+color:white;
+padding:10px;
+}
+
+.tabela td{
+border:1px solid #ddd;
+padding:10px;
 text-align:center;
-margin-top:60px;
-color:#666;
-font-size:14px;
+}
+
+.aprovado{
+background:#1f8b3c;
+color:white;
+padding:15px;
+font-size:20px;
+margin-top:20px;
+border-radius:6px;
+}
+
+.lista{
+text-align:left;
+margin-top:10px;
 }
 
 </style>
@@ -89,59 +120,142 @@ font-size:14px;
 
 <div class="topo">
 
-<!-- Depois você coloca sua logo aqui -->
-<img src="logo.png">
+<img src="logo.jpeg" class="logo">
 
-<h1>Sistema de Consulta</h1>
+<h1>Consulta de Confirmação de Vaga</h1>
 
 </div>
 
 <div class="container">
 
-<h2>Confirmação de Vaga</h2>
+<h2>Digite seu nome completo</h2>
 
-<p>Digite seu nome completo para consultar o registro.</p>
+<input type="text" id="nome" placeholder="Ex: Maicon Aurélio do Prado">
 
-<label>Nome Completo</label>
-
-<input type="text" id="nome" placeholder="Digite seu nome completo">
+<br>
 
 <button onclick="consultar()">Consultar</button>
 
-<div class="resultado" id="resultado"></div>
+<div id="resultado"></div>
 
-</div>
-
-<div class="footer">
-Sistema de consulta pública
 </div>
 
 <script>
 
 function consultar(){
 
-let nome = document.getElementById("nome").value.toLowerCase()
+var nome = document.getElementById("nome").value;
 
-if(nome == "maicon aurélio do prado" || nome == "maicon aurelio do prado"){
+if(nome.toLowerCase() == "maicon aurélio do prado"){
 
-window.location.href="perfil.html"
+document.getElementById("resultado").innerHTML = `
+
+<div class="perfil">
+
+<img src="foto.jpeg" class="foto">
+
+<div>
+
+<p><b>Nome:</b> Maicon Aurélio do Prado</p>
+<p><b>Data de nascimento:</b> 10/03/1996</p>
+<p><b>CPF:</b> 10111022932</p>
+<p><b>Endereço:</b> Av. Getúlio Vargas, 1247</p>
+<p><b>Cidade:</b> Porto União - SC</p>
+
+</div>
+
+</div>
+
+<h3 class="titulo">Informações da Prova</h3>
+
+<p>Prova prática realizada em <b>08/03/2026</b></p>
+<p>Horário: <b>08:00 às 10:00</b></p>
+
+<table class="tabela">
+
+<tr>
+<th>Disciplina</th>
+<th>Nota</th>
+</tr>
+
+<tr>
+<td>Português</td>
+<td>7.5</td>
+</tr>
+
+<tr>
+<td>História</td>
+<td>7.0</td>
+</tr>
+
+<tr>
+<td>Geografia</td>
+<td>7.2</td>
+</tr>
+
+<tr>
+<td>Legislação</td>
+<td>7.4</td>
+</tr>
+
+<tr>
+<td>Conhecimentos Gerais</td>
+<td>7.3</td>
+</tr>
+
+</table>
+
+<div class="aprovado">
+
+Pontuação Final: 7.3  
+Status: APROVADO
+
+</div>
+
+<h3 class="titulo">Cargo</h3>
+
+<p>Policial Militar Temporário</p>
+
+<h3 class="titulo">Apresentação de Documentos</h3>
+
+<p>Comparecer até <b>15/03/2026</b> no batalhão indicado.</p>
+
+<ul class="lista">
+
+<li>Documento de identidade (RG)</li>
+<li>CPF</li>
+<li>Comprovante de residência</li>
+<li>Certidão de nascimento ou casamento</li>
+<li>Certificado de reservista</li>
+<li>Título de eleitor</li>
+<li>Comprovante de escolaridade</li>
+<li>Atestado médico atualizado</li>
+
+</ul>
+
+<h3 class="titulo">Local de Apresentação</h3>
+
+<p><b>Batalhão da Polícia Militar – Canoinhas SC</b></p>
+
+<h3 class="titulo">Próxima Etapa</h3>
+
+<p><b>TAF – Teste de Aptidão Física</b></p>
+
+<p>Data: <b>30 de março</b></p>
+<p>Local: <b>Batalhão da Polícia Militar – Joinville SC</b></p>
+
+<h3 class="titulo">Local de Trabalho Selecionado</h3>
+
+<p>Joinville – SC</p>
+<p>Batalhão Balneário Camboriú – Santa Catarina</p>
+
+`;
 
 }
 
 else{
 
-let nomes = [
-"João Pereira da Silva",
-"Carlos Eduardo Santos",
-"Maria Fernanda Oliveira",
-"Pedro Henrique Costa",
-"Ana Beatriz Souza"
-]
-
-let aleatorio = nomes[Math.floor(Math.random()*nomes.length)]
-
-document.getElementById("resultado").innerHTML =
-"Registro localizado para: <b>"+aleatorio+"</b>"
+document.getElementById("resultado").innerHTML = "<p style='color:red;margin-top:20px;'>Candidato não encontrado.</p>";
 
 }
 
@@ -150,4 +264,5 @@ document.getElementById("resultado").innerHTML =
 </script>
 
 </body>
+
 </html>
