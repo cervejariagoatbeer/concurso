@@ -2,162 +2,143 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>Painel de Análise</title>
+<title>Central de Análise</title>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 
 <style>
 body {
     margin: 0;
-    background: #020202;
-    color: #00ffcc;
+    background: #0b0f14;
+    color: #00ffc6;
     font-family: Consolas, monospace;
 }
 
 .container {
     display: grid;
-    grid-template-columns: 2fr 1fr;
-    grid-template-rows: auto auto;
-    gap: 15px;
-    padding: 20px;
+    grid-template-columns: 300px 1fr;
+    height: 100vh;
 }
 
-/* TÍTULO */
-.header {
-    grid-column: 1 / 3;
-    text-align: center;
-    font-size: 28px;
-    padding: 10px;
-    border: 1px solid #00ffcc;
-    box-shadow: 0 0 15px #00ffcc;
+/* PAINEL LATERAL */
+.sidebar {
+    border-right: 1px solid #00ffc6;
+    padding: 15px;
+    background: rgba(0,255,198,0.05);
+    box-shadow: 0 0 10px #00ffc6;
 }
 
-/* TERMINAL */
-.terminal {
-    height: 180px;
-    overflow: hidden;
-    border: 1px solid #00ffcc;
+.title {
+    font-size: 18px;
+    margin-bottom: 10px;
+    text-shadow: 0 0 10px #00ffc6;
+}
+
+.block {
+    margin-bottom: 15px;
+    border: 1px solid #00ffc6;
     padding: 10px;
-    box-shadow: 0 0 10px #00ffcc;
 }
 
 /* MAPA */
-.map {
-    position: relative;
-    height: 400px;
-    background: radial-gradient(circle, #001a1a, #000);
-    border: 1px solid #00ffcc;
-    box-shadow: 0 0 15px #00ffcc;
-}
-
-/* ROTA */
-.route {
-    position: absolute;
+#map {
     width: 100%;
     height: 100%;
 }
 
-.dot {
-    width: 8px;
-    height: 8px;
-    background: #00ffcc;
-    border-radius: 50%;
-    position: absolute;
-    animation: pulse 1s infinite;
+/* TERMINAL */
+.terminal {
+    height: 120px;
+    overflow: hidden;
+    font-size: 12px;
 }
 
-@keyframes pulse {
-    50% { transform: scale(1.5); opacity: 0.5; }
-}
-
-/* LINHA ANIMADA */
-.line {
+/* LINHA DE SCAN */
+.scan {
     position: absolute;
+    width: 100%;
     height: 2px;
-    background: #00ffcc;
-    transform-origin: left;
-    animation: draw 4s linear infinite;
+    background: #00ffc6;
+    animation: scan 3s linear infinite;
 }
 
-@keyframes draw {
-    from { width: 0; }
-    to { width: 100%; }
-}
-
-/* DADOS */
-.panel {
-    border: 1px solid #00ffcc;
-    padding: 10px;
-    box-shadow: 0 0 10px #00ffcc;
-}
-
-/* TIMELINE */
-.timeline div {
-    margin-bottom: 6px;
-}
-
-/* GLITCH */
-.glitch {
-    animation: glitch 1s infinite;
-}
-
-@keyframes glitch {
-    0% { text-shadow: 2px 2px red; }
-    50% { text-shadow: -2px -2px blue; }
-    100% { text-shadow: 2px 2px red; }
+@keyframes scan {
+    0% { top: 0; }
+    100% { top: 100%; }
 }
 </style>
-
 </head>
 
 <body>
 
 <div class="container">
 
-<div class="header glitch">
-[SISTEMA DE ANÁLISE E MONITORAMENTO]
+<!-- LATERAL -->
+<div class="sidebar">
+
+<div class="title">[ CENTRAL DE DADOS ]</div>
+
+<div class="block">
+<b>IDENTIFICAÇÃO</b><br>
+Nome: USUÁRIO ANALISADO<br>
+Status: Ativo<br>
+Cidade: Foz do Iguaçu<br>
+Área: Educação
 </div>
 
-<div class="terminal" id="terminal"></div>
+<div class="block terminal" id="terminal"></div>
 
-<div class="panel">
-<h3>DADOS</h3>
-<p>Nome: <b>USUÁRIO IDENTIFICADO</b></p>
-<p>Status: Ativo</p>
-<p>Área: Educação</p>
-<p>Região: Sul do Brasil</p>
-</div>
-
-<div class="map">
-
-<!-- PONTOS -->
-<div class="dot" style="top:60%; left:30%;"></div>
-<div class="dot" style="top:40%; left:50%;"></div>
-<div class="dot" style="top:70%; left:70%;"></div>
-
-<!-- LINHAS -->
-<div class="line" style="top:60%; left:30%; width:200px;"></div>
-<div class="line" style="top:40%; left:50%; width:150px;"></div>
-
-</div>
-
-<div class="panel">
-<h3>LINHA DO TEMPO</h3>
-<div class="timeline">
-<div>2022 → Formação concluída</div>
-<div>2023 → Atividade profissional</div>
-<div>2024 → Registro acadêmico</div>
-<div>2025 → Atualização funcional</div>
-<div>2026 → Status ativo</div>
-</div>
+<div class="block">
+<b>EVENTOS</b><br>
+2022 → Registro acadêmico<br>
+2023 → Atividade profissional<br>
+2024 → Atualização<br>
+2025 → Monitoramento<br>
 </div>
 
 </div>
+
+<!-- MAPA -->
+<div id="map"></div>
+
+</div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
 <script>
+// MAPA CENTRALIZADO EM FOZ DO IGUAÇU
+var map = L.map('map').setView([-25.5469, -54.5882], 13);
+
+// CAMADA (ESTILO ESCURO)
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+}).addTo(map);
+
+// PONTOS SIMULADOS
+var pontos = [
+    [-25.547, -54.588], // centro
+    [-25.550, -54.590], // escola (simulado)
+    [-25.545, -54.580]  // região urbana
+];
+
+// MARCADORES
+pontos.forEach(p => {
+    L.circleMarker(p, {
+        color: "#00ffc6",
+        radius: 6
+    }).addTo(map);
+});
+
+// ROTA SIMULADA
+var rota = L.polyline(pontos, {
+    color: '#00ffc6'
+}).addTo(map);
+
+// TERMINAL
 const linhas = [
-"> Inicializando sistema...",
-"> Carregando base de dados...",
-"> Cruzando informações...",
-"> Gerando mapa de atividade...",
+"> Iniciando sistema...",
+"> Conectando base...",
+"> Carregando mapa...",
+"> Inserindo pontos...",
 "> Análise concluída."
 ];
 
@@ -169,11 +150,11 @@ function escrever() {
             texto += linhas[i][j];
             document.getElementById("terminal").innerHTML = texto;
             j++;
-            setTimeout(escrever, 30);
+            setTimeout(escrever, 25);
         } else {
             texto += "<br>";
             i++; j = 0;
-            setTimeout(escrever, 300);
+            setTimeout(escrever, 200);
         }
     }
 }
